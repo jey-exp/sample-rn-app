@@ -7,9 +7,6 @@ const client = new Client().setEndpoint("https://cloud.appwrite.io/v1").setProje
 const database = new Databases(client);
 
 export const updateSeachCount = async(query:string, movie:Movie) =>{
-    // console.log('====================================');
-    // console.log(movie);
-    // console.log('====================================');
     try {
         const results = await database.listDocuments(DATABASE_ID,COLLECTION_ID, [
                  Query.equal('searchTerm', query)
@@ -34,4 +31,16 @@ export const updateSeachCount = async(query:string, movie:Movie) =>{
         throw error;
     }
     
+}
+
+export const getTrendingMovies = async (): Promise<TrendingMovie[] | undefined>=>{
+    try {
+        const results = await database.listDocuments(DATABASE_ID,COLLECTION_ID, [
+            Query.limit(5), Query.orderDesc("count")
+   ])
+    return results.documents as unknown as TrendingMovie[];
+    } catch (error) {
+        console.log("Error in getting tredming movies : ", error);
+        return undefined;
+    }
 }

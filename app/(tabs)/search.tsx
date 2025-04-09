@@ -16,15 +16,13 @@ const search = () => {
     const timeoutId =setTimeout(async ()=>{
       if(searchQuery.trim()){
         await loadmovies();
-          // console.log('=--===================================');
-          // console.log("movies.title : ", movies);
-          // console.log('=--===================================');
-        if(movies?.length > 0 && movies?.[0])
-        await updateSeachCount(searchQuery,movies[0]);
+        if(movies?.length > 0 && movies?.[0]){
+          await updateSeachCount(searchQuery,movies[0]);
+        }
       }
       else{
         reset();
-      }},500)
+      }},700)
 
       return () => clearTimeout(timeoutId); 
   },[searchQuery])
@@ -41,7 +39,7 @@ const search = () => {
         !loading && !error ? (
           <View className='mt-10 px-5'>
             <Text className='text-center text-gray-500'>
-              {searchQuery.trim()? "Not movies found" : "Search for a movie"}
+              {searchQuery.trim()? "No movies found" : "Search for a movie"}
             </Text>
           </View>
         ) : null
